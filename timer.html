@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Timer 555</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 20px;">
+    <h1>Calculadora de Timer 555 (Modo Astable)</h1>
+    <p>Ingrese los valores de las resistencias (R1 y R2) y del condensador (C):</p>
+
+    <form id="calcForm">
+        <label for="r1">R1 (Ohmios):</label><br>
+        <input type="number" id="r1" required><br><br>
+
+        <label for="r2">R2 (Ohmios):</label><br>
+        <input type="number" id="r2" required><br><br>
+
+        <label for="c">C (Faradios):</label><br>
+        <input type="number" id="c" step="any" required><br><br>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    <h2>Resultados:</h2>
+    <p id="resultado"></p>
+
+    <script>
+        document.getElementById('calcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const r1 = parseFloat(document.getElementById('r1').value);
+            const r2 = parseFloat(document.getElementById('r2').value);
+            const c = parseFloat(document.getElementById('c').value);
+
+            if (r1 > 0 && r2 > 0 && c > 0) {
+                const frecuencia = 1.44 / ((r1 + 2 * r2) * c);
+                const cicloTrabajo = ((r1 + r2) / (r1 + 2 * r2)) * 100;
+
+                document.getElementById('resultado').innerHTML =
+                    `<strong>Frecuencia:</strong> ${frecuencia.toFixed(2)} Hz<br>
+                     <strong>Ciclo de trabajo:</strong> ${cicloTrabajo.toFixed(2)} %`;
+            } else {
+                document.getElementById('resultado').textContent = 'Por favor, ingrese valores válidos.';
+            }
+        });
+    </script>
+</body>
+</html>
